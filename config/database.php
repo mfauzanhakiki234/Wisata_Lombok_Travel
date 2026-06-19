@@ -95,8 +95,13 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
-        ],
+            'sslmode' => 'require',
+        ], // <--- Pastikan di baris ini bentuknya tutup kurung siku dan koma
+
+        'sqlsrv' => [
+            'driver' => 'sqlsrv',
+            // ... dst
+],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
