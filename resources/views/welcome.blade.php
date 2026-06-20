@@ -54,6 +54,6 @@
     <footer class="bg-gray-900 text-gray-400 text-center py-6 mt-20 text-sm">
         <p>&copy; {{ date('Y') }} Wisata Lombok Travel. Hak Cipta Dilindungi.</p>
     </footer>
-
+ <a href="{{ route('wisata.show', $wisata->id) }}" class="bg-blue-600 text-white text-xs px-3 py-2 rounded hover:bg-blue-700 transition-colors">Detail Paket</a>
 </body>
 </html>

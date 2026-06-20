@@ -25,3 +25,6 @@ Route::get('/isi-data-wisata', function () {
         return "Gagal mengisi data: " . $e->getMessage();
     }
 });
+
+// Rute untuk melihat detail wisata berdasarkan ID
+Route::get('/wisata/{id}', [WisataController::class, 'show'])->name('wisata.show');
