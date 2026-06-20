@@ -1,19 +1,15 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "api/index.php",
-            "use": "@vercel/php",
-            "config": {
-                "maxExecutionTime": 60,
-                "phpVersion": "8.3"
-            }
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.3.0",
+            "maxDuration": 60
         }
-    ],
+    },
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "api/index.php"
+            "dest": "/api/index.php"
         }
     ]
 }
