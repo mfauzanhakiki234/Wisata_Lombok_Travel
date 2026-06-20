@@ -1,4 +1,4 @@
 <?php
 
-// Mengarahkan Vercel secara otomatis ke file index utama Laravel
+// Forward Vercel requests to normal Laravel index.php
 require __DIR__ . '/../public/index.php';
