@@ -1,5 +1,14 @@
 <?php
 
+// Paksa folder penyimpanan Laravel ke direktori /tmp milik Vercel
+unset($_ENV['APP_ENV']);
+$appPath = __DIR__ . '/../bootstrap/app.php';
+if (file_exists($appPath)) {
+    $_ENV['APP_STORAGE'] = '/tmp/storage';
+    if (!is_dir('/tmp/storage/framework/views')) {
+        mkdir('/tmp/storage/framework/views', 0755, true);
+    }
+}
 // --- CONFIG VERCEL SERVERLESS STORAGE ---
 putenv('APP_STORAGE=/tmp/storage');
 putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
