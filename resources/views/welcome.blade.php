@@ -27,6 +27,12 @@
     <main class="container mx-auto my-10 px-4">
         <h3 class="text-2xl font-bold mb-6 border-b-2 border-blue-500 pb-2 inline-block">Destinasi Populer</h3>
 
+        @isset($errorMessage)
+            <div class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+                {{ $errorMessage }}
+            </div>
+        @endisset
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @forelse($semuaWisata as $wisata)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
@@ -39,7 +45,7 @@
                         <p class="text-gray-600 text-sm line-clamp-3 my-2">{{ $wisata->deskripsi }}</p>
                         <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
                             <span class="text-orange-500 font-bold">Rp {{ number_format($wisata->harga_tiket, 0, ',', '.') }}</span>
-                            <a href="#" class="bg-blue-600 text-white text-xs px-3 py-2 rounded hover:bg-blue-700 transition-colors">Detail Paket</a>
+                            <a href="{{ route('wisata.show', $wisata->id) }}" class="bg-blue-600 text-white text-xs px-3 py-2 rounded hover:bg-blue-700 transition-colors">Detail Paket</a>
                         </div>
                     </div>
                 </div>
@@ -54,6 +60,5 @@
     <footer class="bg-gray-900 text-gray-400 text-center py-6 mt-20 text-sm">
         <p>&copy; {{ date('Y') }} Wisata Lombok Travel. Hak Cipta Dilindungi.</p>
     </footer>
- <a href="{{ route('wisata.show', $wisata->id) }}" class="bg-blue-600 text-white text-xs px-3 py-2 rounded hover:bg-blue-700 transition-colors">Detail Paket</a>
 </body>
 </html>

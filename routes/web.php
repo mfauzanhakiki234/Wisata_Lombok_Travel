@@ -4,7 +4,6 @@ use App\Http\Controllers\WisataController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
-// Rute otomatis untuk membuat tabel database via Vercel (Jangan dihapus dulu)
 Route::get('/jalankan-migrasi-satelit', function () {
     try {
         Artisan::call('migrate', ['--force' => true]);
@@ -14,7 +13,6 @@ Route::get('/jalankan-migrasi-satelit', function () {
     }
 });
 
-// Rute Baru: Halaman utama sekarang diatur oleh WisataController
 Route::get('/', [WisataController::class, 'index']);
 
 Route::get('/isi-data-wisata', function () {
@@ -26,5 +24,4 @@ Route::get('/isi-data-wisata', function () {
     }
 });
 
-// Rute untuk melihat detail wisata berdasarkan ID
 Route::get('/wisata/{id}', [WisataController::class, 'show'])->name('wisata.show');
