@@ -29,6 +29,7 @@ $runtimeEnv = [
     'CACHE_STORE' => 'file',
     'QUEUE_CONNECTION' => 'sync',
     'FILESYSTEM_DISK' => 'local',
+    'LOG_CHANNEL' => 'stack',
 ];
 
 if (empty(getenv('APP_KEY')) && empty($_ENV['APP_KEY']) && empty($_SERVER['APP_KEY'])) {
@@ -46,6 +47,21 @@ if (!file_exists($runtimeEnv['DB_DATABASE'])) {
     chmod($runtimeEnv['DB_DATABASE'], 0666);
 }
 
+// Buat folder /tmp storage dan /tmp bootstrap cache
+$storageFolders = [
+    '/tmp/storage/framework/cache',
+    '/tmp/storage/framework/sessions',
+    '/tmp/storage/framework/views',
+    '/tmp/storage/framework/testing',
+    '/tmp/storage/logs',
+    '/tmp/bootstrap/cache',
+];
+foreach ($storageFolders as $folder) {
+    if (!is_dir($folder)) {
+        mkdir($folder, 0755, true);
+    }
+}
+
 // Cek apakah aplikasi sedang dalam mode pemeliharaan
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;
@@ -57,6 +73,11 @@ require __DIR__.'/../vendor/autoload.php';
 // Jalankan Aplikasi Laravel
 /** @var \Illuminate\Foundation\Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
+$app->useStoragePath('/tmp/storage');
+$app->useCachedConfigPath('/tmp/bootstrap/cache/config.php');
+$app->useCachedRoutesPath('/tmp/bootstrap/cache/routes.php');
+$app->useCachedPackagesPath('/tmp/bootstrap/cache/packages.php');
+$app->useCachedServicesPath('/tmp/bootstrap/cache/services.php');
 
 $request = Request::capture();
 

@@ -20,6 +20,21 @@ putenv('APP_STORAGE=/tmp/storage');
 $_ENV['APP_STORAGE'] = '/tmp/storage';
 $_SERVER['APP_STORAGE'] = '/tmp/storage';
 
+// Pastikan folder cache dan storage di /tmp tersedia
+$tmpDirs = [
+    '/tmp/storage/framework/cache',
+    '/tmp/storage/framework/sessions',
+    '/tmp/storage/framework/views',
+    '/tmp/storage/framework/testing',
+    '/tmp/storage/logs',
+    '/tmp/bootstrap/cache',
+];
+foreach ($tmpDirs as $dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+}
+
 // Gunakan SQLite di /tmp agar Vercel bisa menulis database saat runtime
 $tmpSqlite = '/tmp/database.sqlite';
 if (!file_exists($tmpSqlite)) {
@@ -36,6 +51,7 @@ $runtimeEnv = [
     'CACHE_STORE' => 'file',
     'QUEUE_CONNECTION' => 'sync',
     'FILESYSTEM_DISK' => 'local',
+    'LOG_CHANNEL' => 'stack',
 ];
 
 if (empty(getenv('APP_KEY')) && empty($_ENV['APP_KEY']) && empty($_SERVER['APP_KEY'])) {
