@@ -49,6 +49,7 @@ $runtimeEnv = [
     'DB_DATABASE' => $tmpSqlite,
     'SESSION_DRIVER' => 'file',
     'CACHE_STORE' => 'file',
+    'CACHE_DRIVER' => 'file',
     'QUEUE_CONNECTION' => 'sync',
     'FILESYSTEM_DISK' => 'local',
     'LOG_CHANNEL' => 'stack',
