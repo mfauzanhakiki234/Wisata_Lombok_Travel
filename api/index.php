@@ -7,7 +7,7 @@ putenv('CACHE_STORE=array');
 putenv('SESSION_DRIVER=cookie');
 putenv('LOG_CHANNEL=stderr');
 
-// 2. Otomatis buat struktur folder yang dibutuhkan Laravel di dalam /tmp
+// 2. Otomatis buat struktur folder runtime yang dibutuhkan Laravel 12 di /tmp
 $required_folders = [
     '/tmp/storage/framework/views',
     '/tmp/storage/framework/sessions',
@@ -21,20 +21,19 @@ foreach ($required_folders as $folder) {
     }
 }
 
-// 3. Alihkan penulisan bootstrap cache agar tidak mengunci serverless
+// 3. Alihkan penulisan bootstrap cache
 putenv('BOOTSTRAP_CACHE_PATH=/tmp/storage/bootstrap/cache');
 
-/* |--------------------------------------------------------------------------
-| SUNTIKKAN KONFIGURASI STORAGE KE LARAVEL (PERBAIKAN EROR 500)
-|--------------------------------------------------------------------------
-*/
-// Ambil inisialisasi aplikasi Laravel asli
+// 4. Muat Autoloader Vendor Composer Modern
+require __DIR__ . '/../vendor/autoload.php';
+
+// 5. Jalankan Aplikasi Laravel via bootstrap/app.php
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Paksa Laravel menggunakan folder /tmp untuk menulis data runtime
+// 6. Paksa Laravel menggunakan storage dinamis Vercel
 $app->useStoragePath('/tmp/storage');
 
-// Jalankan kernel Laravel untuk memproses request halaman
+// 7. Handle Request ke Browser
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
