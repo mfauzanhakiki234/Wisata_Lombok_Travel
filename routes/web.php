@@ -16,3 +16,12 @@ Route::get('/jalankan-migrasi-satelit', function () {
 
 // Rute Baru: Halaman utama sekarang diatur oleh WisataController
 Route::get('/', [WisataController::class, 'index']);
+
+Route::get('/isi-data-wisata', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        return "Mantap! Data tiruan wisata Lombok berhasil dimasukkan ke Neon.tech!";
+    } catch (\Exception $e) {
+        return "Gagal mengisi data: " . $e->getMessage();
+    }
+});
