@@ -1,10 +1,9 @@
 {
     "version": 2,
-    "framework": null,
     "builds": [
         {
             "src": "api/index.php",
-            "use": "vercel-php@0.7.0"
+            "use": "vercel-php@0.8.1"
         }
     ],
     "routes": [
@@ -12,8 +11,5 @@
             "src": "/(.*)",
             "dest": "api/index.php"
         }
-    ],
-    "projectSettings": {
-        "nodeVersion": "22.x"
-    }
+    ]
 }
