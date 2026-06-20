@@ -1,2 +1,6 @@
 /vendor
 /node_modules
+/bootstrap/cache
+/storage
+/public/build
+/public/hot
