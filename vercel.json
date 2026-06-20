@@ -5,7 +5,8 @@
             "src": "api/index.php",
             "use": "vercel-php",
             "config": {
-                "maxExecutionTime": 60
+                "maxExecutionTime": 60,
+                "phpVersion": "8.3"
             }
         }
     ],
