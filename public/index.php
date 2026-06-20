@@ -4,7 +4,13 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// Cek apakah aplikasi sedang dalam mode pemeliharaan (Maintenance Mode)
+// Paksa Laravel menggunakan folder /tmp/storage milik Vercel agar bisa ditulis (Writable)
+$_ENV['APP_STORAGE'] = '/tmp/storage';
+if (!is_dir('/tmp/storage/framework/views')) {
+    mkdir('/tmp/storage/framework/views', 0755, true);
+}
+
+// Cek apakah aplikasi sedang dalam mode pemeliharaan
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;
 }
