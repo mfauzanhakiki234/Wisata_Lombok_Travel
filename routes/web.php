@@ -1,27 +1,7 @@
 <?php
 
-use App\Http\Controllers\WisataController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\WisataController;
 
-Route::get('/jalankan-migrasi-satelit', function () {
-    try {
-        Artisan::call('migrate', ['--force' => true]);
-        return "Mantap! Semua tabel database berhasil dibuat di Neon.tech via Vercel!";
-    } catch (\Exception $e) {
-        return "Gagal migrasi: " . $e->getMessage();
-    }
-});
-
+// Pastikan rute utama '/' mengarah ke WisataController, BUKAN langsung ke view
 Route::get('/', [WisataController::class, 'index']);
-
-Route::get('/isi-data-wisata', function () {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
-        return "Mantap! Data tiruan wisata Lombok berhasil dimasukkan ke Neon.tech!";
-    } catch (\Exception $e) {
-        return "Gagal mengisi data: " . $e->getMessage();
-    }
-});
-
-Route::get('/wisata/{id}', [WisataController::class, 'show'])->name('wisata.show');
