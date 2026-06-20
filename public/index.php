@@ -73,11 +73,9 @@ require __DIR__.'/../vendor/autoload.php';
 // Jalankan Aplikasi Laravel
 /** @var \Illuminate\Foundation\Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
-$app->useStoragePath('/tmp/storage');
-$app->useCachedConfigPath('/tmp/bootstrap/cache/config.php');
-$app->useCachedRoutesPath('/tmp/bootstrap/cache/routes.php');
-$app->useCachedPackagesPath('/tmp/bootstrap/cache/packages.php');
-$app->useCachedServicesPath('/tmp/bootstrap/cache/services.php');
+if (method_exists($app, 'useStoragePath')) {
+    $app->useStoragePath('/tmp/storage');
+}
 
 $request = Request::capture();
 
