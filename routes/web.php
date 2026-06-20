@@ -1,13 +1,18 @@
 <?php
 
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\WisataController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
-// Halaman utama portal berita wisata
-Route::get('/', [TaskController::class, 'index']);
+// Rute otomatis untuk membuat tabel database via Vercel (Jangan dihapus dulu)
+Route::get('/jalankan-migrasi-satelit', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        return "Mantap! Semua tabel database berhasil dibuat di Neon.tech via Vercel!";
+    } catch (\Exception $e) {
+        return "Gagal migrasi: " . $e->getMessage();
+    }
+});
 
-// Proses Simpan Berita Wisata Baru (Create)
-Route::post('/wisata', [TaskController::class, 'store'])->name('tasks.store');
-
-// Proses Hapus Berita Wisata (Delete)
-Route::delete('/wisata/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+// Rute Baru: Halaman utama sekarang diatur oleh WisataController
+Route::get('/', [WisataController::class, 'index']);

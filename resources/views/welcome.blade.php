@@ -3,95 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wonderful Lombok - Portal Wisata NTB</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Wisata Lombok Travel</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-    <div class="w-full bg-cover bg-center py-20 text-center text-white relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?w=1200');">
-        <h1 class="text-4xl font-extrabold tracking-wide md:text-5xl">🌴 WONDERFUL LOMBOK</h1>
-        <p class="mt-2 text-lg text-slate-200">Portal Informasi & Berita Wisata Terkini di Nusa Tenggara Barat</p>
-    </div>
-
-    <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <div class="lg:col-span-1">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 sticky top-6">
-                <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    ✍️ <span>Tambah Berita Wisata</span>
-                </h2>
-
-                @if(session('success'))
-                    <div class="mb-4 p-3 bg-emerald-100 text-emerald-800 rounded-xl text-sm font-semibold">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                <form action="{{ route('tasks.store') }}" method="POST" class="space-y-4">
-                    @csrf
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Judul Berita / Destinasi</label>
-                        <input type="text" name="title" required class="w-full p-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="Contoh: Pesona Kuta Mandalika">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Lokasi Wilayah</label>
-                        <input type="text" name="location" required class="w-full p-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="Contoh: Lombok Tengah">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Link URL Foto Wisata (Opsional)</label>
-                        <input type="url" name="image_url" class="w-full p-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="https://images.unsplash.com/photo-...">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Isi Berita / Artikel</label>
-                        <textarea name="description" rows="5" required class="w-full p-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="Tuliskan ulasan atau berita lengkap mengenai destinasi wisata ini..."></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-sm text-sm">
-                        🚀 Publikasikan Berita
-                    </button>
-                </form>
-            </div>
+    <nav class="bg-blue-600 p-4 text-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wide">🌴 Lombok Travel</h1>
+            <ul class="flex space-x-4 text-sm">
+                <li><a href="#" class="hover:underline">Beranda</a></li>
+                <li><a href="#" class="hover:underline">Paket Wisata</a></li>
+                <li><a href="#" class="hover:underline">Kontak</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <div class="lg:col-span-2 space-y-6">
-            <h2 class="text-2xl font-bold text-slate-900 border-b pb-2 flex items-center gap-2">
-                📰 <span>Kabar & Artikel Destinasi</span>
-            </h2>
+    <header class="bg-blue-500 text-white text-center py-20 px-4">
+        <h2 class="text-4xl font-extrabold mb-2">Jelajahi Keindahan Pulau Lombok</h2>
+        <p class="text-lg opacity-90">Temukan destinasi pantai tersembunyi dan petualangan seru bersama kami.</p>
+    </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @forelse($beritas as $berita)
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 flex flex-col justify-between">
-                        <div>
-                            <img src="{{ $berita->image_url }}" alt="{{ $berita->title }}" class="w-full h-48 object-cover">
-                            <div class="p-5">
-                                <span class="inline-block bg-blue-50 text-blue-600 text-xs px-2.5 py-1 rounded-full font-bold mb-2">
-                                    📍 {{ $berita->location }}
-                                </span>
-                                <h3 class="font-bold text-lg text-slate-900 leading-snug mb-2">{{ $berita->title }}</h3>
-                                <p class="text-sm text-slate-600 line-clamp-4">{{ $berita->description }}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="px-5 pb-5 pt-2 border-t border-slate-50 flex justify-between items-center bg-slate-50/50">
-                            <span class="text-xs text-slate-400">{{ $berita->created_at->diffForHumans() }}</span>
-                            
-                            <form action="{{ route('tasks.destroy', $berita->id) }}" method="POST" onsubmit="return confirm('Hapus artikel berita ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-xs font-bold text-red-500 hover:text-red-700 border border-red-200 bg-white px-3 py-1.5 rounded-lg hover:bg-red-50 transition">
-                                    🗑️ Hapus
-                                </button>
-                            </form>
+    <main class="container mx-auto my-10 px-4">
+        <h3 class="text-2xl font-bold mb-6 border-b-2 border-blue-500 pb-2 inline-block">Destinasi Populer</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            @forelse($semuaWisata as $wisata)
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gray-300 flex items-center justify-center text-gray-500">
+                        <span class="text-sm">Foto {{ $wisata->nama_wisata }}</span>
+                    </div>
+                    <div class="p-4">
+                        <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">{{ $wisata->lokasi }}</span>
+                        <h4 class="text-xl font-bold my-1 text-gray-900">{{ $wisata->nama_wisata }}</h4>
+                        <p class="text-gray-600 text-sm line-clamp-3 my-2">{{ $wisata->deskripsi }}</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-orange-500 font-bold">Rp {{ number_format($wisata->harga_tiket, 0, ',', '.') }}</span>
+                            <a href="#" class="bg-blue-600 text-white text-xs px-3 py-2 rounded hover:bg-blue-700 transition-colors">Detail Paket</a>
                         </div>
                     </div>
-                @empty
-                    <div class="col-span-2 text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
-                        <p class="text-slate-500">Belum ada berita wisata yang diunggah. Mulai isi di kolom kiri!</p>
-                    </div>
-                @endforelse
-            </div>
+                </div>
+            @empty
+                <div class="col-span-3 text-center py-10 bg-white rounded-lg shadow-inner">
+                    <p class="text-gray-500">Belum ada data destinasi wisata. Yuk, isi datanya di database!</p>
+                </div>
+            @endforelse
         </div>
+    </main>
 
-    </div>
+    <footer class="bg-gray-900 text-gray-400 text-center py-6 mt-20 text-sm">
+        <p>&copy; {{ date('Y') }} Wisata Lombok Travel. Hak Cipta Dilindungi.</p>
+    </footer>
 
 </body>
 </html>
