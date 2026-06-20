@@ -24,5 +24,21 @@ foreach ($required_folders as $folder) {
 // 3. Alihkan penulisan bootstrap cache agar tidak mengunci serverless
 putenv('BOOTSTRAP_CACHE_PATH=/tmp/storage/bootstrap/cache');
 
-// 4. Panggil file index utama Laravel
-require __DIR__ . '/../public/index.php';
+/* |--------------------------------------------------------------------------
+| SUNTIKKAN KONFIGURASI STORAGE KE LARAVEL (PERBAIKAN EROR 500)
+|--------------------------------------------------------------------------
+*/
+// Ambil inisialisasi aplikasi Laravel asli
+$app = require_once __DIR__ . '/../bootstrap/app.php';
+
+// Paksa Laravel menggunakan folder /tmp untuk menulis data runtime
+$app->useStoragePath('/tmp/storage');
+
+// Jalankan kernel Laravel untuk memproses request halaman
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+)->send();
+
+$kernel->terminate($request, $response);

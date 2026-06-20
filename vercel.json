@@ -7,6 +7,10 @@
             "use": "vercel-php@0.8.0"
         }
     ],
+    "env": {
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": ":memory:"
+    },
     "routes": [
         {
             "src": "/build/(.*)",
